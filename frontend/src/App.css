@@ -1,0 +1,12 @@
+h1{
+  text-justify: auto;
+  text-align: center;
+}
+table{
+  margin: auto;
+  padding: auto;
+}
+th, td {
+  padding: 10px;
+  text-align: left;
+}
