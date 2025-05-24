@@ -1,7 +1,23 @@
 import React from "react";
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const StocksPage = () => {
+
+    const [data, setData] = useState([]);
+    const getData = async () => {
+      await axios.get("http://localhost:8000/getData")
+        .then((res) => {
+          console.log(res.data);
+          setData(res.data);
+        });
+
+    };
+
+    useEffect(() => {
+      getData();
+    }, []);
+
     return (
         <div>
             <h1>Stock Price Aggregator</h1>
@@ -17,22 +33,16 @@ const StocksPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Apple Inc.</td>
-                        <td>AAPL</td>
-                        <td>$150.00</td>
-                        <td>2023-10-01 12:00:00</td>
-                        <td><button>Add</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Microsoft Corp.</td>
-                        <td>MSFT</td>
-                        <td>$300.00</td>
-                        <td>2023-10-01 12:00:00</td>
-                        <td><button>Add</button></td>
-                    </tr>
+                    {data.map((item, index) => (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{item.company}</td>
+                            <td>{item.stockName}</td>
+                            <td>{item.stockPrice}</td>
+                            <td>{item.lastUpdated}</td>
+                            <td><button>Add</button></td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
